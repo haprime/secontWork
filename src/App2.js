@@ -5,14 +5,7 @@ import Movie from './Movie' //자식(Movie.js)연결
 
 class App extends Component{
 
-  state={
-    movies:[
-      {title : '원더우먼', poster : 'http://image.cine21.com/resize/cine21/poster/2017/0519/16_11_51__591e9ab7efb8e[X230,330].jpg'},
-      {title : '캡틴마블', poster : 'http://image.cine21.com/resize/cine21/poster/2019/0225/14_10_18__5c7378ba87fb6[X230,330].jpg'},
-      {title : '스파이더맨', poster : 'http://image.cine21.com/resize/cine21/poster/2014/0407/14_03_47__534231b3914f6[X230,330].jpg'},
-      {title : '아이언맨', poster : 'http://image.cine21.com/resize/cine21/poster/2008/0320/M0010001_[X230,330].jpg'},
-    ]
-  }//state
+  state={}//state
 
   //5초 뒤에 새로운 영화 추가되기
   componentDidMount(){
@@ -26,15 +19,24 @@ class App extends Component{
     }, 2000);
   }//componentDidMount
 
+  //랜더링 function
+_renderMovies =()=>{
+    const movies = this.state.movies.map((x,index) => {
+        return <Movie title = {x.title} poster={x.poster} key={index}/> 
+      });
+      return movies;
+}
+
   render(){
     return (
       <div className="App">
-        {this.state.movies.map((x,index) => {
-            return <Movie title = {x.title} poster={x.poster} key={index}/> 
-          })
+        {
+            //this.state.movie가 있을 땐  _renderMovies  실행
+            //state가 비어있는 상황일 땐 Loading...문구
+            this.state.movies ? this._renderMovies() : 'Loading'
+            
         }
       </div>
-
     ); 
   }//render
 }//component
